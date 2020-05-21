@@ -1,3 +1,6 @@
+// Edited: Alan C. Posadas, Mariana
+//
+
 #include <stdio.h>
 #include <time.h>
 
@@ -16,7 +19,7 @@ int main(int argc, char* argv[])
 		x = (i + .5)*step;
 		sum = sum + 4.0/(1.+ x*x);
 	}
-	
+
 	pi = sum*step;
 	stop = clock();
 

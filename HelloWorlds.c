@@ -1,3 +1,6 @@
+// Edited: Alan C. Posadas, Mariana
+//
+
 #include <stdio.h>
 #define NT 1
 
