@@ -33,10 +33,8 @@ int main(){
                 // integrate using the midpoint rectangle method
                 const double x = x_lower_bound + dx*((double)i + 0.5);
                 const double d_local = 1.0 / sqrt(x) * dx;
-                #pragma omp critical
-                {
+                #pragma omp atomic
                 integral += d_local;
-                }
             }
         const double t1 = omp_get_wtime();
 
