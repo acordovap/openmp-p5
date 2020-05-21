@@ -6,6 +6,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
+// Edited: Alan C. Posadas, Mariana
+//
 
 //////////////////// Constantes y variables globales //////////////////////////
 
@@ -61,6 +63,7 @@ void FindPrimes(int start, int end)
     // start siempre es non
     int i,range = end - start + 1;
 
+    #pragma omp parallel for
     for( i = start; i <= end; i += 2 )
     {
         if( TestForPrime(i) )
@@ -76,14 +79,15 @@ int main(int argc, char **argv)
     int     start, end,i;
     clock_t before, after;
 
-    if( argc == 3 )
+    if( argc == 4 )
     {
         CLstart = atoi(argv[1]);
         CLend   = atoi(argv[2]);
+        omp_set_num_threads(atoi(argv[3]));
     }
     else
     {
-        printf("Uso:- %s <rango inicio> <rango fin>\n", argv[0]);
+        printf("Uso:- %s <rango inicio> <rango fin> <numero hilos>\n", argv[0]);
         exit(-1);
     }
 
