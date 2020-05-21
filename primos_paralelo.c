@@ -16,6 +16,7 @@
 //#include <windows.h>
 #include <time.h>
 #include <math.h>
+#include <omp.h>
 static       int gProgress    = 0,
                  gPrimesFound = 0;   // Acumulador de número de primos encontrados
 long             globalPrimes[1000000];  // Para almacenar los primos encontrados
@@ -83,7 +84,7 @@ void FindPrimes(int start, int end)
 int main(int argc, char **argv)
 {
     int     start, end,i;
-    clock_t before, after;
+    //clock_t before, after;
 
     if( argc == 4 )
     {
@@ -117,11 +118,12 @@ int main(int argc, char **argv)
         start = start + 1;  // Asegurar que iniciamos con un número impar
 
 
-    before = clock();
+    //before = clock();
+    const double before = omp_get_wtime();
     FindPrimes(start, end);
-    after = clock();
+    //after = clock();
+    const double after = omp_get_wtime();
 
-    printf("\n\nSe encontraron %8d primos entre  %6d y %6d en %7.2f secs\n",
-           gPrimesFound, CLstart, CLend, (float)(after - before)/ CLOCKS_PER_SEC);
+    printf("\n\nSe encontraron %8d primos entre  %6d y %6d en %7.2f secs\n",gPrimesFound, CLstart, CLend, (after - before));
 
 }
