@@ -7,7 +7,7 @@
 //
 //
 
-// Edited: Alan C. Posadas, Mariana 
+// Edited: Alan C. Posadas, Mariana
 //
 
 #include <stdio.h>
@@ -28,11 +28,12 @@ int main(){
         double integral = 0.0;
 
         const double t0 = omp_get_wtime();
-        for(int i = 0; i < nSteps; i++) {
-            // integrate using the midpoint rectangle method
-            const double x = x_lower_bound + dx*((double)i + 0.5);
-            integral += 1.0/sqrt(x) * dx;
-        }
+        #pragma omp parallel for
+            for(int i = 0; i < nSteps; i++) {
+                // integrate using the midpoint rectangle method
+                const double x = x_lower_bound + dx*((double)i + 0.5);
+                integral += 1.0/sqrt(x) * dx;
+            }
         const double t1 = omp_get_wtime();
 
         const double analytical_result = (sqrt(x_upper_bound) - sqrt(x_lower_bound))*2;
