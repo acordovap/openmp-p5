@@ -32,7 +32,10 @@ void ShowProgress( int val, int range )
 {
     int percentDone = 0;
 
+    #pragma omp critical
+    {
     gProgress++;
+    }
 
     percentDone = (int)((float)gProgress/(float)range *200.0f + 0.5f);
 
@@ -66,9 +69,12 @@ void FindPrimes(int start, int end)
     #pragma omp parallel for
     for( i = start; i <= end; i += 2 )
     {
-        if( TestForPrime(i) )
+        if( TestForPrime(i) ){
+            #pragma omp critical
+            {
             globalPrimes[gPrimesFound++] = i;
-
+            }
+        }
         ShowProgress(i, range);
     }
 }
