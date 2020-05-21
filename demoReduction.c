@@ -32,7 +32,11 @@ int main(){
             for(int i = 0; i < nSteps; i++) {
                 // integrate using the midpoint rectangle method
                 const double x = x_lower_bound + dx*((double)i + 0.5);
-                integral += 1.0/sqrt(x) * dx;
+                const double d_local = 1.0 / sqrt(x) * dx;
+                #pragma omp critical
+                {
+                integral += d_local;
+                }
             }
         const double t1 = omp_get_wtime();
 
